@@ -1,0 +1,35 @@
+body {
+    font-family: system-ui, sans-serif; max-width: 720px; margin: 40px auto; padding: 16px;
+}
+h1 {
+    margin-bottom: 12px;
+}
+.input  {display: flex; gap: 8px;}
+#taskInput {flex: 1; padding: 8px 10px;}
+#taskList {margin-top: 16px; padding-left: 0; list-style: none;}
+#taskList li {display: flex; gap: 8px; align-items: center; margin:6px 0; padding: 6px 8px; border: 1px solid #ddd; border-radius: 6px;}
+#taskList li button {margin-left: auto;}
+#taskList { margin-top: 16px; list-style: none; padding: 0; }
+#taskList li { display: flex; align-items: center; gap: 8px; border: 1px solid #ddd; padding: 8px 10px; border-radius: 8px; margin: 8px 0; }
+#taskList li .text { flex: 1; }
+#taskList li.done .text { text-decoration: line-through; opacity: 0.6; }
+
+.toggle { width: 16px; height: 16px; }
+
+.del { background: none; border: 1px solid #e3e3e3; border-radius: 6px; padding: 2px 8px; cursor: pointer; }
+.del:hover { background: #ffecec; }
+
+.filters { margin-top: 10px; display: flex; gap: 8px; }
+.filters .filter { padding: 6px 10px; border: 1px solid #ddd; background: #fff; border-radius: 8px; cursor: pointer; }
+.filters .filter.active { background: #eef6ff; border-color: #bcdcff; }
+
+.del {
+  background: none;
+  border: none;
+  color: #c00;
+  font-size: 16px;
+  cursor: pointer;
+}
+.del:hover {
+  color: #f33;
+}

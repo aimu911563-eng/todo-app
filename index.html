@@ -1,0 +1,24 @@
+<!DOCTYPE html> 
+<html lang="ja"> 
+<head> 
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+    <title>ToDoアプリ</title> 
+    <link rel="stylesheet" href="css/style.css" /> 
+    <script src="js/script.js" defer></script> 
+</head> 
+<body> 
+    <h1>My ToDo</h1> 
+    <div class="controls"> 
+    <div class="input"> 
+        <input id="taskInput" type="text" placeholder="タスク入力" /> 
+        <button id="addBtn">追加</button> 
+        <button class="filter active" data-filter="all" type="button">すべて</button>
+        <button class="filter" data-filter="active" type="button">未完了</button>
+        <button class="filter" data-filter="done" type="button">完了</button>
+    </div> 
+    <ul id="taskList"> </ul> 
+</body> 
+</html>
+
+
