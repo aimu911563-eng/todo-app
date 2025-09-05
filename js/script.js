@@ -1,6 +1,5 @@
 console.log("script.js loaded");
 
-const addFrom = document.querySelector("#addFrom");
 const addBtn = document.querySelector("#addBtn");
 const taskInput = document.querySelector("#taskInput");
 const taskList = document.querySelector("#taskList");
@@ -84,7 +83,7 @@ function applyFilter() {
 
   if (filterEl) {
     filterEl.querySelectorAll(".filter").forEach(btn => {
-     btn.classList.toggle("active", btn,DataTransferItem.filter === currentFilter);
+     btn.classList.toggle("active", btn,dataset.filter === currentFilter);
     });
   } 
 }
@@ -99,7 +98,7 @@ taskInput.addEventListener("keydown", (e) => {
 });
 
 filterEl?.addEventListener("click" , (e) => {
-  const btn = e.target.closent(".filter");
+  const btn = e.target.closest(".filter");
   if(!btn) return;
   currentFilter = btn.dataset.filter;
   localStorage.setItem("filter" , currentFilter);
