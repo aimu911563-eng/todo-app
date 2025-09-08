@@ -117,6 +117,7 @@ function handleAdd() {
   taskInput.value = "";
   taskInput.focus();
   applyFilter();
+  updateAddBtn();
 }
 
 function applyFilter() {
@@ -181,6 +182,16 @@ function updateCount() {
   }
 }
 
+function updateAddBtn() {
+  const ok = taskInput.value.replace(/\s+/g, " ").trim().length > 0;
+  addBtn.disabled = !ok;
+}
+
+taskInput.addEventListener("input", ( )=> {
+  clearAddError.apply();
+  updateAddBtn();
+});
+
 addBtn?.addEventListener("click", handleAdd);
 
 taskInput.addEventListener("keydown", (e) => {
@@ -207,3 +218,4 @@ filterEl?.querySelectorAll(".filter").forEach(btn => {
 loadTasks();
 applyFilter();
 updateCount();
+updateAddBtn();

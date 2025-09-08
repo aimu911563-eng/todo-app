@@ -105,3 +105,8 @@ button:focus-visible {
   75%{transform: translateX(-3px);}
   100%{transform: translateX(0);}
 }
+
+#addBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
