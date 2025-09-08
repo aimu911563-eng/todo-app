@@ -23,7 +23,6 @@ function addTask(task) {
     saveTasks();
     applyFilter();
   });
-
   const span = document.createElement("span");
   span.className = "text";
   span.textContent = text;
@@ -37,7 +36,49 @@ function addTask(task) {
     saveTasks();
   });
 
-  li.append(toggle, span, del);
+  //編集
+  const edit =document.createElement("button");
+  edit.type = "button";
+  edit.className = "edit";
+  edit.textContent = "編集";
+  edit.addEventListener("click", () => {
+    if (li.querySelector("input[type='text']")) {
+      return;
+    }
+    const textEl =li.querySelector(".text");
+    const oldText =textEl.textContent;
+
+    const input =document.createElement("input");
+    input.type = "text";
+    input.value = oldText;
+
+    textEl.replaceWith(input);
+
+    input.focus();
+    input.setSelectionRange(0, input.value.length);
+
+  const finalize = (newText, { cancel = false} = {}) => {
+    if (!input.isConnected) return; 
+    const span = document.createElement("span");
+    span.className = "text";
+    const next = cancel ? oldText : (newText.trim() || oldText);
+    span.textContent = next;
+    input.replaceWith(span);
+    if(!cancel) {
+      saveTasks();
+      applyFilter();
+    }
+  };
+  
+  input.addEventListener("keydown", (e) => {
+    if(e.key === "Enter") finalize(input.value);
+    if(e.key === "Escape") finalize(oldText, { cancel:true});   
+  });
+
+  input.addEventListener("blur", () => finalize(input.value));
+  });
+
+  li.append(toggle, span, edit, del);
   taskList.appendChild(li);
 }
 
@@ -48,6 +89,7 @@ function saveTasks() {
     return { text, done };
   });
   localStorage.setItem("tasks", JSON.stringify(tasks));
+  updateCount();
 }
 
 function loadTasks() {
@@ -82,10 +124,25 @@ function applyFilter() {
   });
 
   if (filterEl) {
-    filterEl.querySelectorAll(".filter").forEach(btn => {
-     btn.classList.toggle("active", btn,dataset.filter === currentFilter);
-    });
-  } 
+    filterEl.querySelectorAll(".filter").forEach((btn) => {
+     btn.classList.toggle("active", btn.dataset.filter === currentFilter);
+    }); 
+  }
+
+  updateCount()
+}
+
+function updateCount() {
+  let left = 0;
+  for (const li of taskList.children) {
+    if (!li.classList.contains("done")) {
+      left++;
+    }
+  }
+  const counterEl = document.getElementById("counter");
+  if (counterEl) {
+    counterEl.textContent = `未完了: ${left}件`;
+  }
 }
 
 addBtn?.addEventListener("click", handleAdd);
@@ -105,5 +162,12 @@ filterEl?.addEventListener("click" , (e) => {
   applyFilter();
 });
 
+filterEl?.querySelectorAll(".filter").forEach(btn => {
+  const on = btn.dataset.filter === currentFilter;
+  btn.classList.toggle("active , on");
+  btn.setAttribute("aria-preaaed" , on);
+});
+
 loadTasks();
 applyFilter();
+updateCount();
