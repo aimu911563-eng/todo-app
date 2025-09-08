@@ -4,6 +4,7 @@ const addBtn = document.querySelector("#addBtn");
 const taskInput = document.querySelector("#taskInput");
 const taskList = document.querySelector("#taskList");
 const filterEl = document.querySelector(".filters");
+const addError = document.querySelector("addError");
 
 let currentFilter = localStorage.getItem("filter") || "all";
 
@@ -53,6 +54,7 @@ function addTask(task) {
     input.value = oldText;
 
     textEl.replaceWith(input);
+    li.classList.add("editing");
 
     input.focus();
     input.setSelectionRange(0, input.value.length);
@@ -62,8 +64,12 @@ function addTask(task) {
     const span = document.createElement("span");
     span.className = "text";
     const next = cancel ? oldText : (newText.trim() || oldText);
+    
     span.textContent = next;
     input.replaceWith(span);
+
+    li.classList.remove("editing");
+
     if(!cancel) {
       saveTasks();
       applyFilter();
@@ -125,12 +131,42 @@ function applyFilter() {
 
   if (filterEl) {
     filterEl.querySelectorAll(".filter").forEach((btn) => {
-     btn.classList.toggle("active", btn.dataset.filter === currentFilter);
+     const on = btn.dataset.filter === currentFilter;
+     btn.classList.toggle("active", on);
+     btn.setAttribute("aria-pressed" , String(on));
     }); 
   }
 
   updateCount()
 }
+
+function showAddError(msg) {
+  if (addError) {
+    addError.textContent =msg;
+  }
+  taskInput.classList.add("shake");
+  setTimeout(() => taskInput.classList.remove("shake"), 300);
+}
+function clearAddError() {
+  if (addError) addError.textContent = "";
+}
+
+function handleAdd() {
+  const text = taskInput.value.replace(/\s+/g, " ").trim();
+  if (!text) {
+    showAddError("空白だけのタスクは追加できません");
+    taskInput.focus();
+    return;
+  }
+  clearAddError();
+  addTask({ text, done: false });
+  saveTasks();
+  taskInput.value="";
+  taskInput.focus();
+  applyFilter();
+};
+
+taskInput.addEventListener("input",clearAddError);
 
 function updateCount() {
   let left = 0;
@@ -164,7 +200,7 @@ filterEl?.addEventListener("click" , (e) => {
 
 filterEl?.querySelectorAll(".filter").forEach(btn => {
   const on = btn.dataset.filter === currentFilter;
-  btn.classList.toggle("active , on");
+  btn.classList.toggle("active" , on);
   btn.setAttribute("aria-preaaed" , on);
 });
 
