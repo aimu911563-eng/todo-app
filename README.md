@@ -13,3 +13,13 @@
 - Prevent adding empty/whitespace-only tasks
 - Disable "Add" button when input is empty
 - Improved accessibility (filter buttons with aria-pressed)
+## 画面イメージ
+
+- トップ画面  
+  ![トップ画面](docs/images/top.png)
+
+- タスク追加・編集・削除  
+  ![タスク追加](docs/images/task-added.png)
+
+- フィルタ切替  
+  ![フィルタ](docs/images/filter.png)
