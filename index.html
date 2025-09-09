@@ -11,18 +11,21 @@
     <h1>My ToDo</h1> 
 
     <form id="addForm" class="controls" autocomplete="off">
+        <p id ="addError" aria-live="polite" style="color:#d33;margin: 6px 0 0;"></p>
         <label for="taskInput">タスク</label>
         <input id="taskInput" type="text" placeholder="タスクを入力" />
-        <button id="addBtn" type="submit">追加</button>
+        <button id="addBtn" type="submit" disabled>追加</button>
     </form>
 
     <div class="filters" role="group" aria-label="表示フィルタ">       
         <button class="filter active" data-filter="all" type="button">すべて</button>
         <button class="filter" data-filter="active" type="button">未完了</button>
-        <button class="filter" data-filter="done" type="button">完了</button>
-    </div> 
-    
+        <button class="filter" data-filter="done" type="button">完了</button>    
+    </div>
+
     <ul id="taskList"> </ul> 
+
+    <div id="counter"></div>
 </body> 
 </html>
 

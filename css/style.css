@@ -13,7 +13,7 @@ h1 {
   display: flex;
   gap: 8px;
   align-items: center;
-  margin-bottom: 10px;;
+  margin-bottom: 10px;
 }
 
 #taskInput {
@@ -24,7 +24,7 @@ h1 {
 .filters {
   display: flex;
   gap: 8px;
-  margin: 10px 0 16px;;
+  margin: 10px 0 16px;
 }
 .filters .filter {
   padding:  6px 10px;
@@ -52,6 +52,7 @@ h1 {
   padding: 8px 10px;
   border-radius: 8px;
   margin: 8px  0;
+  background: #fff;
 }  
 
 #taskList li .text {
@@ -62,6 +63,7 @@ h1 {
   text-decoration: line-through;
   opacity: 0.6;
 }
+
 .toggle {
   width: 16px;
   height: 16px;
@@ -82,4 +84,36 @@ h1 {
 button:focus-visible {
   outline: 2px solid #66aaff;
   outline-offset: 2px;
+}
+
+#addBtn:disabled {
+  opacity:  0.5;
+  cursor: not-allowed;
+}
+
+#taskList li.editing {
+  outline: 1px dashed #66aaff;
+  background: #f5faff;
+}
+
+#addeError {
+  color: #d33;
+  min-height: 1rem;
+}
+
+.shake {
+  animation: shake 0.2s linear 0s 2;
+}
+
+@keyframes shake {
+  0%{transform: translateX(0);}
+  25%{transform: translateX(-3px);}
+  50%{transform: translateX(3px);}
+  75%{transform: translateX(-3px);}
+  100%{transform: translateX(0);}
+}
+
+#addBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
