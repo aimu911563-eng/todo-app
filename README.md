@@ -1,3 +1,22 @@
+# Todo App
+
+シンプルでアクセシブルなToDoアプリ。  
+**デモ:** https://aimu911563-eng.github.io/todo-app/
+
+## 機能
+- タスクの追加 / 編集 / 削除 / 完了切替
+- フィルタ（all / active / done）
+- 入力バリデーション（空白のみを禁止）
+- 未完了カウント表示
+- localStorage による保存・復元
+- アクセシビリティ（aria-pressed、操作ボタンに aria-label 等）
+
+## 使い方（開発）
+```bash
+git clone https://github.com/aimu911563-eng/todo-app.git
+cd todo-app
+# ローカルで index.html を開くだけで動作
+
 # ToDo App
 - Demo: https://aimu911563-eng.github.io/todo-app/
 - Features: Add/Delete, Persist with localStorage, Done toggle, Filter (all/active/done)
