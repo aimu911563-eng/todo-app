@@ -1,34 +1,20 @@
-<!DOCTYPE html> 
-<html lang="ja"> 
-<head> 
-    <meta charset="UTF-8"> 
-    <meta name="viewport" content="width=device-width, initial-scale=1"> 
-    <title>ToDoアプリ</title> 
-    <link rel="stylesheet" href="css/style.css" /> 
-    <script src="js/script.js" defer></script> 
-</head> 
-<body> 
-    <h1>My ToDo</h1> 
-
-    <form id="addForm" class="controls" autocomplete="off">
-        <p id ="addError" aria-live="polite" style="color:#d33;margin: 6px 0 0;"></p>
-        <label for="taskInput">タスク</label>
-        <input id="taskInput" type="text" placeholder="タスクを入力" />
-        <p id="addError" aria-live="polite"></p>
-        <button id="addBtn" type="submit" disabled>追加</button>
-    </form>
-
-    <p id="counter" aria-live="polite">未完了: 0 件</p>
-
-    <div class="filters" role="group" aria-label="表示フィルタ">       
-        <button class="filter active" data-filter="all" type="button">すべて</button>
-        <button class="filter" data-filter="active" type="button">未完了</button>
-        <button class="filter" data-filter="done" type="button">完了</button>    
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <html lang="ja">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/script.js" defer></script>
+    <title>to do app  (2) </title>
+</head>
+<body>
+  <div id="app">
+      <input id="newTodo" placeholder="タスクを入力…" autocomplete="off">
+      <button id="addbtn">追加</button>
+      <ul id="list"></ul>
+      <div class="filters">
+        <button id="filter-all">All</button>
+        <button id="filter-active">Active</button>
+        <button id="filter-done">Done</button>
+      </div>
     </div>
-
-    <ul id="taskList" aria-label="タスクリスト"></ul> 
-
-    <div id="counter"></div>
-</body> 
-</html>
-
+</body>
