@@ -1,16 +1,14 @@
-# ToDo アプリ（第2弾）
+# ToDo App
+第1弾→第2弾へ機能を段階的に拡張した学習プロジェクト。
 
-追加／削除／完了／フィルタ（All/Active/Done）／編集（ダブルクリック）／保存（localStorage）／アニメーション（追加/削除）を備えたシンプルなToDoアプリです。
+- デモ: （GitHub Pages のURL）
+- リリース: v1.0.0 / v2.0.0（タグ参照）
 
-- 公開ページ: https://<あなたのID>.github.io/todo-app/
-- 技術: HTML, CSS, JavaScript
+## v2（現行 / main）
+- フィルタ（All/Active/Done）
+- ダブルクリック編集（Enter確定 / Esc取消 / クリック外確定）
+- localStorage 保存・復元
+- 追加/削除アニメーション
 
-## 主な機能
-- Enterで追加、チェックで取り消し線
-- フィルタ：All / Active / Done
-- ダブルクリックでタスク名を編集（Enterで確定 / Escでキャンセル）
-- localStorageで保存＆復元
-- 追加・削除アニメーション
-
-## スクリーンショット
-![アプリのスクリーンショット](./img/screenshot.png)
+## v1（初版）
+- 追加 / 削除 / 完了（最小機能）
