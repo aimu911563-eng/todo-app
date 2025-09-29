@@ -1,20 +1,32 @@
 <!DOCTYPE html>
+<html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <html lang="ja">
+    <meta charset="UTF-8" />
+    <title>to do app  (2) </title>
     <link rel="stylesheet" href="css/style.css">
     <script src="js/script.js" defer></script>
-    <title>to do app  (2) </title>
 </head>
 <body>
+  
   <div id="app">
-      <input id="newTodo" placeholder="タスクを入力…" autocomplete="off">
+      <input id="newTodo" placeholder="タスクを入力…" autocomplete="off" />
       <button id="addbtn">追加</button>
+
+
       <ul id="list"></ul>
+
+
       <div class="filters">
-        <button id="filter-all">All</button>
-        <button id="filter-active">Active</button>
-        <button id="filter-done">Done</button>
+        <button id="filter-all" type="button">All</button>
+        <button id="filter-active" type="button">Active</button>
+        <button id="filter-done" type="button">Done</button>
+      </div>
+
+      <div id ="meta">
+        <span id="count"></span>
+        <button id="clearDone">Clear completed</button>
       </div>
     </div>
+    
 </body>
+</html>

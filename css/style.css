@@ -156,5 +156,21 @@ li.leaving {
   li { transition: none; }
 }
 
+#meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: .5rem;
+  font-size: 12px;
+  opacity: .8;
+}
+#clearDone:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+.filters button.active {
+  outline: 2px solid rgba(59,130,246,.5);
+  border-radius: 6px;
+}
 
 

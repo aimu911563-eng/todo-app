@@ -4,9 +4,12 @@ const list = document.querySelector("#list");
 const all = document.getElementById("filter-all");
 const active = document.getElementById("filter-active");
 const done = document.getElementById("filter-done");
+const $count = document.getElementById('count');
+const $clear = document.getElementById('clearDone');
 
 
-addbtn.addEventListener ("click", () => {
+addbtn.addEventListener ("click", (e) => {
+    console.log("[ADD]", newTodo.value.trim());
     
     const text = newTodo.value.trim()
     if (text === "") {
@@ -17,10 +20,12 @@ addbtn.addEventListener ("click", () => {
     const span = document.createElement("span");
     span.className = "todo-text";
     span.textContent = text;
+    enableEditing(span);
     li.appendChild(span);
     list.appendChild(li);
     li.classList.add("enter");
     requestAnimationFrame(() => li.classList.remove("enter"));
+    applyFilter(currentFilter);
     saveTodos()
     newTodo.value = "";
     newTodo.focus();
@@ -30,9 +35,11 @@ addbtn.addEventListener ("click", () => {
     checkbox.type = "checkbox";
     li.prepend(checkbox);
     checkbox.addEventListener ("change", () => {
+        console.log("[TOGGLE]", e.target.checked);
         li.classList.toggle("done");
         applyFilter(currentFilter);
         saveTodos();
+        UpdateMeta();
     })
 
     const clear = document.createElement(`button`);
@@ -48,7 +55,8 @@ addbtn.addEventListener ("click", () => {
             if (e.propertyName === "opacity") {
                 li.removeEventListener("transitionend", onend);
                 li.remove();
-                saveTodos()
+                saveTodos();
+                UpdateMeta();
             }
             
 
@@ -72,8 +80,7 @@ function applyFilter(mode) {
     currentFilter = mode;
 
     for (const li of list.children) {
-        const cd = li.querySelector(`input[type="checkbox"]`);
-        const checked = cd?.checked === true;
+        const checked = li.classList.contains('done');
 
         let show = true;
         if (mode === "active") {
@@ -88,20 +95,6 @@ function applyFilter(mode) {
 }
 
 
-all.addEventListener ("click", () => {
-    applyFilter("all")
-});
-
-active.addEventListener ("click", () => {
-    applyFilter("active")
-});
-
-done.addEventListener ("click", () => {
-    applyFilter("done")    
-});
-
-applyFilter("all")
-
 const aad = [all, active, done];
 function a (toggle) {
     aad.forEach (b =>b.classList.remove(`active`));
@@ -109,20 +102,19 @@ function a (toggle) {
 }
 
 all.addEventListener ("click", (e) => {
-    a (e.currentTarget);
-    applyFilter("all")
+    e.preventDefault(); 
+    setFilter ("all", e.currentTarget)
 });
 
 active.addEventListener ("click", (e) => {
-    a (e.currentTarget);
-    applyFilter("active");
-})
+    e.preventDefault();
+    setFilter ("active", e.currentTarget)
+});
 
 done.addEventListener ("click", (e) => {
-    a (e.currentTarget);
-    applyFilter("done");
-
-})
+    e.preventDefault();
+    setFilter ("done", e.currentTarget)
+});
 
 a(all)
 
@@ -160,6 +152,9 @@ function loadTodos () {
         const checkbox = document.createElement("input");
         checkbox.type = "checkbox";
         checkbox.checked = t.done;
+        if (t.done) {
+            li.classList.add ("done")
+        }
         li.prepend(checkbox);
 
         const clear = document.createElement("button");
@@ -167,20 +162,38 @@ function loadTodos () {
         li.appendChild(clear);
         list.appendChild(li);
 
-        checkbox.addEventListener("click", () => {
+        checkbox.addEventListener("change", (e) => {
+            console.log("[TOGGLE]", e.target.checked);
             li.classList.toggle("done");
             applyFilter(currentFilter);
             saveTodos();
+            UpdateMeta();
         });
 
         clear.addEventListener("click", () => {
             li.remove();
             saveTodos();
+            UpdateMeta();
         })
 
     }
 
 }
+
+window.addEventListener ("DOMContentLoaded", () => {
+    loadTodos();
+    const initial = (location.hash.replace("#","") || "all");
+    setFilter(initial);
+    UpdateMeta();
+})
+
+window.addEventListener ("hashchange", () => {
+    const mode = location.hash.replace("#","") || "all";
+    console.log("[hashchange]", mode);
+    setFilter(mode);
+    applyFilter(mode);
+    a(mode === 'active' ? active : mode === 'done' ? done : all);
+})
 
 function enableEditing(span) {
     span.addEventListener("dblclick", () => {
@@ -196,6 +209,7 @@ function enableEditing(span) {
         input.select();
 
         const commit = (newText) => {
+            console.log("[EDIT]", { before: old, after: newText });
             const s = document.createElement("span");
             s.className = "todo-text";
             s.textContent = newText.trim() || old;
@@ -220,6 +234,34 @@ function enableEditing(span) {
     })
 }
  
+function clearCompleted() {
+    const before = list.children.length;
+    [...list.children].forEach (li => {
+        if (li,classList.contains('done')) li.remove();
+    });
+    if (list.children.length !== before) {
+        saveTodos();
+        applyFilter(currentFilter);
+        UpdateMeta();
+    }
+}
+$clear.addEventListener('click', clearCompleted);
 
-window.addEventListener("DOMContentLoaded", loadTodos);
+function UpdateMeta() {
+    const items = [...list.children];
+    const done = items.filter(li => li.classList.contains('done')).length;
+    const total = items.length;
+    $count.textContent = `Done ${done} / ${total}`;
+    $clear.disabled = done === 0;
+}
 
+function setFilter(mode, btn) {
+   if (location.hash !== '#' + mode) location.hash = mode;
+   currentFilter = mode;
+   applyFilter(mode);
+   a(btn ? btn : mode === 'avtive' ? active : mode === 'done' ? done : all);
+}
+
+const initial = location.hash.replace("#", "") || "all";
+setFilter(initial);
+UpdateMeta();
