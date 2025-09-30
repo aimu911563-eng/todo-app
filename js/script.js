@@ -6,6 +6,8 @@ const active = document.getElementById("filter-active");
 const done = document.getElementById("filter-done");
 const $count = document.getElementById('count');
 const $clear = document.getElementById('clearDone');
+const filterText = document.getElementById("filter-text");
+let keyword = "";
 
 
 addbtn.addEventListener ("click", (e) => {
@@ -34,7 +36,7 @@ addbtn.addEventListener ("click", (e) => {
     const checkbox = document.createElement(`input`);
     checkbox.type = "checkbox";
     li.prepend(checkbox);
-    checkbox.addEventListener ("change", () => {
+    checkbox.addEventListener ("change", (e) => {
         console.log("[TOGGLE]", e.target.checked);
         li.classList.toggle("done");
         applyFilter(currentFilter);
@@ -81,6 +83,7 @@ function applyFilter(mode) {
 
     for (const li of list.children) {
         const checked = li.classList.contains('done');
+        const text = li.querySelector(".todo-text")?.textContent.toLowerCase() || "";
 
         let show = true;
         if (mode === "active") {
@@ -88,6 +91,10 @@ function applyFilter(mode) {
         }
         if (mode === "done") {
             show = checked;
+        }
+
+        if (show && keyword) {
+            show = text.includes(keyword);
         }
 
         li.style.display = show ? "" : "none";
@@ -114,6 +121,11 @@ active.addEventListener ("click", (e) => {
 done.addEventListener ("click", (e) => {
     e.preventDefault();
     setFilter ("done", e.currentTarget)
+});
+
+filterText.addEventListener ("input", (e) => {
+    keyword = e.target.value.trim().toLowerCase();
+    applyFilter(currentFilter);
 });
 
 a(all)
@@ -237,7 +249,7 @@ function enableEditing(span) {
 function clearCompleted() {
     const before = list.children.length;
     [...list.children].forEach (li => {
-        if (li,classList.contains('done')) li.remove();
+        if (li.classList.contains('done')) li.remove();
     });
     if (list.children.length !== before) {
         saveTodos();
@@ -259,9 +271,8 @@ function setFilter(mode, btn) {
    if (location.hash !== '#' + mode) location.hash = mode;
    currentFilter = mode;
    applyFilter(mode);
-   a(btn ? btn : mode === 'avtive' ? active : mode === 'done' ? done : all);
+   a(btn ? btn : mode === 'active' ? active : mode === 'done' ? done : all);
 }
 
 const initial = location.hash.replace("#", "") || "all";
-setFilter(initial);
-UpdateMeta();
+
