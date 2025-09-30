@@ -5,7 +5,7 @@
 **編集 / フィルタ / オートセーブ / 一括削除 / URLで状態保存** に対応。
 
 ## デモ
-- GitHub Pages: （公開後ここにURL）
+- GitHub Pages: https://aimu911563-eng.github.io/todo-app/
 
 ## 主な機能
 - 追加・削除（削除はフェードアニメ）
@@ -27,4 +27,4 @@
 - フィルタは `location.hash` 同期（戻る/進む対応）
 
 ## スクリーンショット
-img/img1.png
+![demo](img/demo.png)
